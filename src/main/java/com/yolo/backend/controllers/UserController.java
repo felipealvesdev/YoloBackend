@@ -2,6 +2,7 @@ package com.yolo.backend.controllers;
 
 
 import com.yolo.backend.domain.User;
+import com.yolo.backend.domain.enums.UserType;
 import com.yolo.backend.dtos.UserDTO;
 import com.yolo.backend.repositories.UserRepository;
 import jakarta.validation.Valid;
@@ -65,6 +66,21 @@ public class UserController {
         }
         userRepository.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).body("User deleted successfully.");
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<Object> filterUserByUserType(@RequestParam String userType) {
+        try {
+            UserType type = UserType.fromString(userType);
+            List<User> userList = userRepository.findByUserType(type);
+            if(userList.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No user was found for this user type.");
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(userList);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user type: " + userType);
+        }
+
     }
 
 }
