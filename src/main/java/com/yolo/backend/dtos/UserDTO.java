@@ -7,9 +7,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record UserDTO(Long id,
-                      @JsonProperty("Nome") String name,
-                      @JsonProperty("Telefone") String phoneNumber,
-                      @JsonProperty("E-mail") String email,
-                      @JsonProperty("Tipo") UserType userType,
-                      @JsonProperty("Data de Cadastro") LocalDate createdAt) {
+                      String name,
+                      String phoneNumber,
+                      String email,
+                      UserType userType,
+                      LocalDate createdAt) {
 }
