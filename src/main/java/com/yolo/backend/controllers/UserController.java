@@ -4,6 +4,7 @@ package com.yolo.backend.controllers;
 import com.yolo.backend.domain.User;
 import com.yolo.backend.dtos.UserDTO;
 import com.yolo.backend.repositories.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,10 +39,22 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> saveUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<User> saveUser(@RequestBody @Valid UserDTO userDTO) {
         var userModel = new User();
         BeanUtils.copyProperties(userDTO, userModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(userModel));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateUser(@PathVariable(value = "id") Long id,
+                                             @RequestBody @Valid UserDTO userDTO) {
+        Optional<User> user = userRepository.findById(id);
+        if(user.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+        }
+        var userModel = user.get();
+        BeanUtils.copyProperties(userDTO, userModel);
+        return ResponseEntity.status(HttpStatus.OK).body(userRepository.save(userModel));
     }
 
 }
