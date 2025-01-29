@@ -6,7 +6,7 @@ import com.yolo.backend.domain.enums.UserType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public record UserDTO(Long id,
+public record UserDTO(
                       String name,
                       String phoneNumber,
                       String email,
