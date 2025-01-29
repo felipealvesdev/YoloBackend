@@ -57,4 +57,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userRepository.save(userModel));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteUserById(@PathVariable(value = "id") Long id) {
+        Optional<User> user = userRepository.findById(id);
+        if(user.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+        }
+        userRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body("User deleted successfully.");
+    }
+
 }
