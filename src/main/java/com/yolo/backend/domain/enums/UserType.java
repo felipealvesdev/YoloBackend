@@ -1,6 +1,7 @@
 package com.yolo.backend.domain.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum UserType {
 
@@ -14,6 +15,7 @@ public enum UserType {
         this.type = type;
     }
 
+    @JsonValue
     public String getType() {
         return type;
     }
