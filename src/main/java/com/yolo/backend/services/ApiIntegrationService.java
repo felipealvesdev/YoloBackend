@@ -5,6 +5,7 @@ import com.yolo.backend.domain.ApiResponse;
 import com.yolo.backend.domain.ApiResponseData;
 import com.yolo.backend.domain.User;
 import com.yolo.backend.dtos.UserDTO;
+import com.yolo.backend.dtos.UserDTOInitialDb;
 import com.yolo.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,15 +38,15 @@ public class ApiIntegrationService {
                 ApiResponseData parsedBody = objectMapper.readValue(body, ApiResponseData.class);
 
 
-                for (UserDTO userDTO : parsedBody.getClientes()) {
+                for (UserDTOInitialDb userDTOInitialDb : parsedBody.getClientes()) {
                     User user = new User();
-                    user.setName(userDTO.name());
-                    user.setEmail(userDTO.email());
-                    user.setPhoneNumber(userDTO.phoneNumber());
-                    user.setUserType(userDTO.userType());
+                    user.setName(userDTOInitialDb.name());
+                    user.setEmail(userDTOInitialDb.email());
+                    user.setPhoneNumber(userDTOInitialDb.phoneNumber());
+                    user.setUserType(userDTOInitialDb.userType());
 
-                    if(userDTO.createdAt() != null) {
-                        user.setCreatedAt(LocalDate.parse(userDTO.createdAt().toString()));
+                    if(userDTOInitialDb.createdAt() != null) {
+                        user.setCreatedAt(LocalDate.parse(userDTOInitialDb.createdAt().toString()));
 
                     }
 
