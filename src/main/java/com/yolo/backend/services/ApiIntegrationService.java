@@ -26,6 +26,11 @@ public class ApiIntegrationService {
 
 
     public void getInitialDataFromApi() {
+        if (userRepository.count() > 0) {
+            System.out.println("Initial data has already been initialized. Skipping getInitialDataFromApi...");
+            return;
+        }
+
         String apiUrl = "https://3ji5haxzr9.execute-api.us-east-1.amazonaws.com/dev/caseYolo";
 
         try {
